@@ -61,13 +61,14 @@ export default function SignatureGenerator() {
             <div className="mt-2 w-full rounded border p-4">
               <div dangerouslySetInnerHTML={{ __html: html }} />
             </div>
-
-            {/* <button
-              onClick={copySignature}
-              className="mt-4 w-full bg-black text-white py-2 rounded"
-            >
-              Copy Signature HTML
-            </button> */}
+            <p className="mt-3 text-center text-xs text-gray-500">
+              Next step?{" "}
+              <a href="https://drive.google.com/file/d/1PBPddyDon9ukGk9_VqioIHY-1Kwj57F9/view?usp=drive_link">
+                <span className="cursor-pointer font-medium text-emerald-700 hover:underline">
+                  Get a walkthrough
+                </span>
+              </a>
+            </p>
           </>
         )}
       </div>
