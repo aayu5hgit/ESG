@@ -63,7 +63,7 @@ export default function SignatureGenerator() {
             </div>
             <p className="mt-3 text-center text-xs text-gray-500">
               Next step?{" "}
-              <a href="https://drive.google.com/file/d/1PBPddyDon9ukGk9_VqioIHY-1Kwj57F9/view?usp=drive_link">
+              <a href="https://drive.google.com/file/d/1glz5UWFx53Z3sKnm_C0MKjkRe1km-o17/view?usp=sharing">
                 <span className="cursor-pointer font-medium text-emerald-700 hover:underline">
                   Get a walkthrough
                 </span>
