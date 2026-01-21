@@ -70,20 +70,24 @@ export function generateSignature(user) {
             </td>
           </tr>
 
+
           <!-- TAGLINE -->
-          <tr>
-            <td height="18" style="height:18px; line-height:13pt;">
-              <span
-                style="
-                  font-size:9pt;
-                  font-weight:bold;
-                  color:#003c39;
-                "
-              >
-                Your Favourite Email Marketing Agency 💚
-              </span>
-            </td>
-          </tr>
+<tr>
+  <td
+    style="
+      padding-top:4px;
+      font-size:9pt;
+      font-family: Arial, sans-serif;
+      font-weight:bold;
+      color:#003c39;
+      line-height:12pt;
+      white-space:nowrap;
+    "
+  >
+    Your Favourite Email Marketing Agency 💚
+  </td>
+</tr>
+
 
           <!-- LOCATIONS -->
           <tr>
