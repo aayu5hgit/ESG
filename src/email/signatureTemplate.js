@@ -75,8 +75,8 @@ export function generateSignature(user) {
 <tr>
   <td
     style="
-      padding-top:4px;
-      font-size:9pt;
+      padding-y:4px;
+      font-size:8pt;
       font-family: Arial, sans-serif;
       font-weight:bold;
       color:#003c39;
@@ -84,7 +84,7 @@ export function generateSignature(user) {
       white-space:nowrap;
     "
   >
-    Your Favourite Email Marketing Agency 💚
+    Your Favourite Email Marketing Agency💚
   </td>
 </tr>
 
