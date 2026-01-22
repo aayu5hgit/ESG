@@ -61,14 +61,24 @@ export default function SignatureGenerator() {
             <div className="mt-2 w-full rounded border p-4">
               <div dangerouslySetInnerHTML={{ __html: html }} />
             </div>
-            <p className="mt-3 text-center text-xs text-gray-500">
-              Next step?{" "}
-              <a href="https://drive.google.com/file/d/198n4rWgZzinLiRRHqNilxSspPuDHRumC/view?usp=sharing">
-                <span className="cursor-pointer font-medium text-emerald-700 hover:underline">
-                  Get a walkthrough
-                </span>
+            <button className="mt-4 flex justify-center w-[100%]">
+              <a
+                href="https://drive.google.com/file/d/198n4rWgZzinLiRRHqNilxSspPuDHRumC/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="    mt-4
+                block w-full
+                rounded-md
+                hover:bg-[#003C39]
+                px-4 py-3
+                text-center
+                text-sm font-medium text-white
+                transition-colors
+                bg-emerald-700"
+              >
+               Next Step: <span className="font-bold ml-1"> Get a walkthrough</span>
               </a>
-            </p>
+            </button>
           </>
         )}
       </div>
