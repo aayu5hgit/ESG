@@ -47,6 +47,13 @@ const employees = {
           email: "chhavi.singh@optimite.net",
           photo: "https://raw.githubusercontent.com/aayu5hgit/ESG/refs/heads/main/public/employees/Chhavi.png"
         },
+
+        dishank: {
+          name: "Dishank Chauhan",
+          title: "Client Success Manager Intern",
+          email: "dishank.chauhan@optimite.net",
+          photo: "https://raw.githubusercontent.com/aayu5hgit/ESG/refs/heads/main/public/employees/Dishank.png"
+        },
       
         dhruvi: {
           name: "Dhruvi Vithlani",
@@ -137,6 +144,13 @@ const employees = {
           title: "Account Manager",
           email: "monika.thapa@optimite.net",
           photo: "https://raw.githubusercontent.com/aayu5hgit/ESG/refs/heads/main/public/employees/Monica.png"
+        },
+
+        nancy: {
+          name: "Nancy Verma",
+          title: "Head of Sales",
+          email: "nancy.verma@optimite.net",
+          photo: "https://raw.githubusercontent.com/aayu5hgit/ESG/refs/heads/main/public/employees/Nancy.png"
         },
       
         natwar: {
