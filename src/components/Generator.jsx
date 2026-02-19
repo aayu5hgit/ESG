@@ -1,17 +1,60 @@
-import { useState } from "react";
-import employees from "../data/employees";
+import { useEffect, useMemo, useState } from "react";
+import { fetchEmployees } from "../services/employees";
 import { generateSignature } from "../email/signatureTemplate";
 import logo from "../../public/OP-Logo-B.png";
 
 export default function SignatureGenerator() {
   const [selected, setSelected] = useState("");
   const [html, setHtml] = useState("");
+  const [employees, setEmployees] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const baseUrl = window.location.origin;
 
+  useEffect(() => {
+    let active = true;
+
+    const loadEmployees = async () => {
+      try {
+        const data = await fetchEmployees();
+        if (active) {
+          setEmployees(data);
+        }
+      } catch (err) {
+        if (active) {
+          setError(err?.message || "Failed to load employees.");
+        }
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadEmployees();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const employeesBySlug = useMemo(() => {
+    const map = new Map();
+    employees.forEach((employee) => {
+      map.set(employee.slug, employee);
+    });
+    return map;
+  }, [employees]);
+
   const handleGenerate = () => {
     if (!selected) return;
-    const signature = generateSignature(employees[selected], baseUrl);
+    const employee = employeesBySlug.get(selected);
+    if (!employee) return;
+    const signature = generateSignature(
+      { ...employee, photo: employee.photo_url },
+      baseUrl,
+    );
     setHtml(signature);
   };
 
@@ -34,25 +77,34 @@ export default function SignatureGenerator() {
             className="w-full appearance-none rounded border bg-white px-3 py-2 pr-10"
             value={selected}
             onChange={(e) => setSelected(e.target.value)}
+            disabled={loading || !!error}
           >
-            <option value="">Select your name</option>
-            {Object.entries(employees)
-              .sort(([, a], [, b]) => a.name.localeCompare(b.name))
-              .map(([key, emp]) => (
-                <option key={key} value={key}>
-                  {emp.name}
-                </option>
-              ))}
+            <option value="">
+              {loading
+                ? "Loading employees..."
+                : "Select your name"}
+            </option>
+            {employees.map((employee) => (
+              <option key={employee.id} value={employee.slug}>
+                {employee.name}
+              </option>
+            ))}
           </select>
 
           <button
             onClick={handleGenerate}
-            disabled={!selected}
+            disabled={!selected || loading || !!error}
             className="rounded bg-emerald-700 px-4 text-white disabled:opacity-50"
           >
             Generate
           </button>
         </div>
+
+        {error && (
+          <p className="mt-3 text-sm text-red-600">
+            {error}
+          </p>
+        )}
 
         {html && (
           <>
