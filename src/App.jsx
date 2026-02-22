@@ -60,7 +60,7 @@ function App() {
 
   if (!isAuthed) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 px-6">
+      <div className="h-screen flex items-center justify-center bg-gray-100 px-6">
         <div className="bg-white rounded-lg shadow p-8 w-full max-w-md">
           <div className="flex items-center gap-3 mb-6">
             <img src={bot} alt="Optimite" className="h-12 object-contain" />

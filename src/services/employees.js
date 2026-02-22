@@ -12,3 +12,17 @@ export async function fetchEmployees() {
 
   return data ?? [];
 }
+
+export async function addEmployee(payload) {
+  const { data, error } = await supabase
+    .from("employees")
+    .insert([payload])
+    .select("id, slug, name, title, email, photo_url")
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
