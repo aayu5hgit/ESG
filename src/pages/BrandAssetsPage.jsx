@@ -5,23 +5,26 @@ import AssetGrid from "../components/ui/AssetGrid";
 import SearchBar from "../components/ui/SearchBar";
 import UploadAssetModal from "../components/ui/UploadAssetModal";
 import QuickViewModal from "../components/ui/QuickViewModal";
+import AdminPasswordModal from "../components/ui/AdminPasswordModal";
 import { deleteAsset } from "../services/brandAssets";
 
 export default function BrandAssetsPage() {
   const [search, setSearch] = useState("");
   const [uploadOpen, setUploadOpen] = useState(false);
   const [quickViewAsset, setQuickViewAsset] = useState(null);
+  const [deleteTarget, setDeleteTarget] = useState(null);
   const { assets, setAssets, loading, error } = useAssets({
     category: "brand-assets",
     search: search || undefined,
   });
 
-  const handleDelete = async (id) => {
-    if (!confirm("Delete this asset?")) return;
+  const confirmDelete = async () => {
+    if (!deleteTarget) return;
     try {
-      await deleteAsset(id);
-      setAssets((prev) => prev.filter((a) => a.id !== id));
+      await deleteAsset(deleteTarget);
+      setAssets((prev) => prev.filter((a) => a.id !== deleteTarget));
     } catch {}
+    setDeleteTarget(null);
   };
 
   return (
@@ -51,7 +54,7 @@ export default function BrandAssetsPage() {
           assets={assets}
           loading={loading}
           error={error}
-          onDelete={handleDelete}
+          onDelete={setDeleteTarget}
           onQuickView={setQuickViewAsset}
         />
       </div>
@@ -66,6 +69,14 @@ export default function BrandAssetsPage() {
       <QuickViewModal
         asset={quickViewAsset}
         onClose={() => setQuickViewAsset(null)}
+      />
+
+      <AdminPasswordModal
+        isOpen={!!deleteTarget}
+        onClose={() => setDeleteTarget(null)}
+        onConfirm={confirmDelete}
+        title="Delete Asset"
+        message="Enter the admin password to delete this asset. This action cannot be undone."
       />
     </div>
   );
