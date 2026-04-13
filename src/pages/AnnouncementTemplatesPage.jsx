@@ -4,6 +4,7 @@ import { useAssets } from "../hooks/useAssets";
 import AssetGrid from "../components/ui/AssetGrid";
 import SearchBar from "../components/ui/SearchBar";
 import UploadAssetModal from "../components/ui/UploadAssetModal";
+import QuickViewModal from "../components/ui/QuickViewModal";
 import { deleteAsset } from "../services/brandAssets";
 
 const TABS = [
@@ -17,6 +18,7 @@ export default function AnnouncementTemplatesPage() {
   const [activeTab, setActiveTab] = useState("");
   const [search, setSearch] = useState("");
   const [uploadOpen, setUploadOpen] = useState(false);
+  const [quickViewAsset, setQuickViewAsset] = useState(null);
 
   const { assets, setAssets, loading, error } = useAssets({
     category: "announcement-templates",
@@ -77,6 +79,7 @@ export default function AnnouncementTemplatesPage() {
           loading={loading}
           error={error}
           onDelete={handleDelete}
+          onQuickView={setQuickViewAsset}
         />
       </div>
 
@@ -85,6 +88,11 @@ export default function AnnouncementTemplatesPage() {
         onClose={() => setUploadOpen(false)}
         defaultCategory="announcement-templates"
         onAssetAdded={(asset) => setAssets((prev) => [asset, ...prev])}
+      />
+
+      <QuickViewModal
+        asset={quickViewAsset}
+        onClose={() => setQuickViewAsset(null)}
       />
     </div>
   );
