@@ -84,7 +84,7 @@ export function generateSignature(user) {
       white-space:nowrap;
     "
   >
-    Your Favourite Email Marketing Agency💚
+   Retention Marketing Agency for Ecommerce Brands
   </td>
 </tr>
 
@@ -167,29 +167,29 @@ export function generateSignature(user) {
         <table cellpadding="0" cellspacing="0" border="0" width="32">
           <tr>
             <td height="22">
-              <a href="https://in.linkedin.com/company/optimite" style="text-decoration:none;">
+              <a href="https://in.linkedin.com/company/optimite?utm_source=email_signature&utm_medium=email&utm_campaign=email_signature" style="text-decoration:none;">
                 <img src="https://raw.githubusercontent.com/aayu5hgit/Optimite-Email-Signature/refs/heads/main/Linedinnn.png" width="20" style="border:0; display:block;" />
               </a>
             </td>
           </tr>
           <tr>
             <td height="22">
-              <a href="https://www.instagram.com/optimite_official/?hl=en" style="text-decoration:none;">
+              <a href="https://www.instagram.com/optimite_official/?hl=en&utm_source=email_signature&utm_medium=email&utm_campaign=email_signature" style="text-decoration:none;">
                 <img src="https://raw.githubusercontent.com/aayu5hgit/Optimite-Email-Signature/refs/heads/main/IG.png" width="20" style="border:0; display:block;" />
               </a>
             </td>
           </tr>
           <tr>
             <td height="22">
-              <a href="https://www.behance.net/optimite_ai" style="text-decoration:none;">
-                <img src="https://raw.githubusercontent.com/aayu5hgit/Optimite-Email-Signature/refs/heads/main/behanceee.png" width="20" style="border:0; display:block;" />
+              <a href="https://clutch.co/profile/optimite?utm_source=email_signature&utm_medium=email&utm_campaign=email_signature" style="text-decoration:none;">
+                <img src="https://raw.githubusercontent.com/aayu5hgit/Optimite-Email-Signature/refs/heads/main/clutch.png" width="20" style="border:0; display:block;" />
               </a>
             </td>
           </tr>
           <tr>
             <td height="22">
-              <a href="https://dribbble.com/optimite" style="text-decoration:none;">
-                <img src="https://raw.githubusercontent.com/aayu5hgit/Optimite-Email-Signature/refs/heads/main/DRIB.png" width="20" style="border:0; display:block;" />
+              <a href="https://optimite.ai?utm_source=email_signature&utm_medium=email&utm_campaign=email_signature" style="text-decoration:none;">
+                <img src="https://raw.githubusercontent.com/aayu5hgit/Optimite-Email-Signature/refs/heads/main/website.png" width="20" style="border:0; display:block;" />
               </a>
             </td>
           </tr>
