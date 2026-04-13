@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Mail, Image, Megaphone, FolderOpen } from "lucide-react";
 import CategoryCard from "../components/ui/CategoryCard";
 import AssetGrid from "../components/ui/AssetGrid";
+import QuickViewModal from "../components/ui/QuickViewModal";
 import { fetchAssetCounts, fetchAssets } from "../services/brandAssets";
 
 const CATEGORIES = [
@@ -39,6 +40,7 @@ export default function DashboardPage() {
   const [counts, setCounts] = useState({});
   const [recentAssets, setRecentAssets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [quickViewAsset, setQuickViewAsset] = useState(null);
 
   useEffect(() => {
     let active = true;
@@ -87,9 +89,15 @@ export default function DashboardPage() {
             assets={recentAssets}
             loading={loading}
             error=""
+            onQuickView={setQuickViewAsset}
           />
         </div>
       </div>
+
+      <QuickViewModal
+        asset={quickViewAsset}
+        onClose={() => setQuickViewAsset(null)}
+      />
     </div>
   );
 }

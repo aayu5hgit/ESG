@@ -4,11 +4,13 @@ import { useAssets } from "../hooks/useAssets";
 import AssetGrid from "../components/ui/AssetGrid";
 import SearchBar from "../components/ui/SearchBar";
 import UploadAssetModal from "../components/ui/UploadAssetModal";
+import QuickViewModal from "../components/ui/QuickViewModal";
 import { deleteAsset } from "../services/brandAssets";
 
 export default function BrandAssetsPage() {
   const [search, setSearch] = useState("");
   const [uploadOpen, setUploadOpen] = useState(false);
+  const [quickViewAsset, setQuickViewAsset] = useState(null);
   const { assets, setAssets, loading, error } = useAssets({
     category: "brand-assets",
     search: search || undefined,
@@ -50,6 +52,7 @@ export default function BrandAssetsPage() {
           loading={loading}
           error={error}
           onDelete={handleDelete}
+          onQuickView={setQuickViewAsset}
         />
       </div>
 
@@ -58,6 +61,11 @@ export default function BrandAssetsPage() {
         onClose={() => setUploadOpen(false)}
         defaultCategory="brand-assets"
         onAssetAdded={(asset) => setAssets((prev) => [asset, ...prev])}
+      />
+
+      <QuickViewModal
+        asset={quickViewAsset}
+        onClose={() => setQuickViewAsset(null)}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import { Download, Trash2 } from "lucide-react";
+import { Download, Trash2, Eye } from "lucide-react";
 
 function formatFileSize(bytes) {
   if (!bytes) return "";
@@ -7,18 +7,21 @@ function formatFileSize(bytes) {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-export default function AssetCard({ asset, onDelete }) {
+export default function AssetCard({ asset, onDelete, onQuickView }) {
   const preview = asset.thumbnail_url || asset.file_url;
   const isImage = asset.file_type?.startsWith("image/");
 
   return (
     <div className="group overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md">
-      <div className="flex aspect-video items-center justify-center overflow-hidden bg-gray-100">
+      <div
+        className="relative flex aspect-video cursor-pointer items-center justify-center overflow-hidden bg-gray-100"
+        onClick={() => onQuickView?.(asset)}
+      >
         {isImage ? (
           <img
             src={preview}
             alt={asset.name}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-contain p-2"
           />
         ) : (
           <div className="flex flex-col items-center gap-1 text-gray-400">
@@ -27,6 +30,14 @@ export default function AssetCard({ asset, onDelete }) {
             </span>
           </div>
         )}
+
+        {/* Hover overlay */}
+        <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/30">
+          <span className="flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-xs font-medium text-gray-700 opacity-0 shadow transition-opacity group-hover:opacity-100">
+            <Eye size={13} />
+            Quick View
+          </span>
+        </div>
       </div>
 
       <div className="p-3">

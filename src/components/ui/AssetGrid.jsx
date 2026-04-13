@@ -1,7 +1,7 @@
 import AssetCard from "./AssetCard";
 import { FolderOpen } from "lucide-react";
 
-export default function AssetGrid({ assets, loading, error, onDelete }) {
+export default function AssetGrid({ assets, loading, error, onDelete, onQuickView }) {
   if (loading) {
     return (
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
@@ -46,7 +46,7 @@ export default function AssetGrid({ assets, loading, error, onDelete }) {
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
       {assets.map((asset) => (
-        <AssetCard key={asset.id} asset={asset} onDelete={onDelete} />
+        <AssetCard key={asset.id} asset={asset} onDelete={onDelete} onQuickView={onQuickView} />
       ))}
     </div>
   );
