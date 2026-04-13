@@ -7,7 +7,7 @@ export default function EmailSignaturesPage() {
       <p className="mt-1 text-sm text-gray-500">
         Generate and copy your email signature for Gmail.
       </p>
-      <div className="mt-6 flex justify-center">
+      <div className="mt-6">
         <SignatureGenerator />
       </div>
     </div>

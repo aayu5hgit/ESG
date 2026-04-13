@@ -34,7 +34,9 @@ export async function uploadBrandAsset(file, category) {
   const safeName = file.name
     .replace(/\.[^/.]+$/, "")
     .toLowerCase()
-    .replace(/[^a-z0-9.-]/g, "-");
+    .replace(/[^a-z0-9]/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
   const path = `${category}/${Date.now()}-${safeName}.${ext}`;
 
   const { error: uploadError } = await supabase.storage
