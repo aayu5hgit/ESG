@@ -1,3 +1,25 @@
+export function generateReplySignature(user) {
+  return `<table cellpadding="0" cellspacing="0" border="0" style="font-family:Arial, sans-serif; font-size:9pt; border-collapse:collapse;">
+  <tbody>
+    <tr>
+      <td style="padding-bottom:2px;">
+        <span style="color:#333333; font-size:9pt; font-weight:bold;">${user.name}</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-bottom:2px;">
+        <span style="color:#274e13; font-size:9pt;">${user.email}</span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span style="color:#333333; font-size:9pt;">${user.title} | </span><span style="color:#333333; font-size:9pt;">Optimite</span>
+      </td>
+    </tr>
+  </tbody>
+</table>`;
+}
+
 export function generateSignature(user) {
   return `
 <table cellpadding="0" cellspacing="0" border="0"

@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { addEmployee, fetchEmployees } from "../services/employees";
 import { supabase } from "../lib/supabaseClient";
-import { generateSignature } from "../email/signatureTemplate";
+import { generateSignature, generateReplySignature } from "../email/signatureTemplate";
 import logo from "../../public/OP-Logo-B.png";
 
 export default function SignatureGenerator() {
   const fileInputRef = useRef(null);
   const [selected, setSelected] = useState("");
   const [html, setHtml] = useState("");
+  const [replyHtml, setReplyHtml] = useState("");
+  const [previewTab, setPreviewTab] = useState("new");
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -78,15 +80,17 @@ export default function SignatureGenerator() {
     if (!selected) return;
     const employee = employeesBySlug.get(selected);
     if (!employee) return;
-    const signature = generateSignature(
-      { ...employee, photo: employee.photo_url },
-      baseUrl,
-    );
+    const employeeData = { ...employee, photo: employee.photo_url };
+    const signature = generateSignature(employeeData, baseUrl);
+    const replySignature = generateReplySignature(employeeData);
     setHtml(signature);
+    setReplyHtml(replySignature);
+    setPreviewTab("new");
   };
 
   const copySignature = async () => {
-    await navigator.clipboard.writeText(html);
+    const content = previewTab === "reply" ? replyHtml : html;
+    await navigator.clipboard.writeText(content);
     alert("Signature copied. Paste it into Gmail → Settings → Signature.");
   };
 
@@ -306,10 +310,30 @@ export default function SignatureGenerator() {
 
         {html && (
           <>
-            <p className="mt-4 text-sm text-gray-500">Preview</p>
+            <div className="mt-4 flex items-center justify-between">
+              <p className="text-sm text-gray-500">Preview</p>
+              <div className="flex rounded-md border border-gray-200 overflow-hidden text-xs font-medium">
+                <button
+                  onClick={() => setPreviewTab("new")}
+                  className={`px-3 py-1 transition-colors ${previewTab === "new" ? "bg-emerald-700 text-white" : "bg-white text-gray-500 hover:bg-gray-50"}`}
+                >
+                  New Email
+                </button>
+                <button
+                  onClick={() => setPreviewTab("reply")}
+                  className={`px-3 py-1 border-l border-gray-200 transition-colors ${previewTab === "reply" ? "bg-emerald-700 text-white" : "bg-white text-gray-500 hover:bg-gray-50"}`}
+                >
+                  Reply Email
+                </button>
+              </div>
+            </div>
 
             <div className="mt-2 w-full rounded border p-4">
-              <div dangerouslySetInnerHTML={{ __html: html }} />
+              {previewTab === "new" ? (
+                <div dangerouslySetInnerHTML={{ __html: html }} />
+              ) : (
+                <div dangerouslySetInnerHTML={{ __html: replyHtml }} />
+              )}
             </div>
             <button className="mt-4 flex justify-center w-[100%]">
               <a
