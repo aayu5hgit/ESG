@@ -259,7 +259,7 @@ export default function SignatureGenerator() {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-100">
+    <div>
       <div className="w-full max-w-xl rounded-lg bg-white p-6 shadow">
         <img src={logo} alt="Optimite" className="mb-4 h-8 object-contain" />
 
