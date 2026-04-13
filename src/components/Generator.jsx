@@ -260,7 +260,7 @@ export default function SignatureGenerator() {
 
   return (
     <div>
-      <div className="w-full max-w-xl rounded-lg bg-white p-6 shadow">
+      <div className="w-full max-w-3xl rounded-lg bg-white p-8 shadow">
         <img src={logo} alt="Optimite" className="mb-4 h-8 object-contain" />
 
         <h1 className="mb-4 text-xl font-semibold">
