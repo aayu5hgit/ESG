@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import {
   Mail,
   Image,
@@ -53,13 +53,13 @@ export default function AdminDashboardPage() {
   const { isAdmin, adminEmail, logout } = useAdmin();
 
   if (!isAdmin) {
-    navigate("/admin", { replace: true });
-    return null;
+    return <Navigate to="/admin" replace />;
   }
 
   const handleLogout = async () => {
+    if (!confirm("Are you sure you want to logout from admin?")) return;
     await logout();
-    navigate("/admin", { replace: true });
+    window.location.href = "/";
   };
 
   return (

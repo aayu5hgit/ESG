@@ -26,8 +26,9 @@ export default function Sidebar() {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
+    if (!confirm("Are you sure you want to logout from admin?")) return;
     await logout();
-    navigate("/");
+    window.location.href = "/";
   };
 
   return (

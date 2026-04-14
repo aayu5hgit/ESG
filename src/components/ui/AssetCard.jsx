@@ -1,4 +1,4 @@
-import { Download, Trash2, Eye } from "lucide-react";
+import { Download, Trash2, Eye, FileText, Sheet } from "lucide-react";
 
 function stripHtml(html) {
   if (!html) return "";
@@ -12,9 +12,21 @@ function formatFileSize(bytes) {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
+function isGoogleType(fileType) {
+  return fileType?.includes("google-apps");
+}
+
+function GoogleIcon({ fileType }) {
+  if (fileType?.includes("spreadsheet")) {
+    return <Sheet size={40} className="text-green-600" />;
+  }
+  return <FileText size={40} className="text-blue-600" />;
+}
+
 export default function AssetCard({ asset, onDelete, onQuickView }) {
   const preview = asset.thumbnail_url || asset.file_url;
   const isImage = asset.file_type?.startsWith("image/");
+  const isGoogle = isGoogleType(asset.file_type);
 
   return (
     <div className="group overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md">
@@ -28,6 +40,13 @@ export default function AssetCard({ asset, onDelete, onQuickView }) {
             alt={asset.name}
             className="h-full w-full object-contain p-2"
           />
+        ) : isGoogle ? (
+          <div className="flex flex-col items-center gap-2">
+            <GoogleIcon fileType={asset.file_type} />
+            <span className="text-xs text-gray-400">
+              {asset.file_type?.includes("spreadsheet") ? "Google Sheet" : "Google Doc"}
+            </span>
+          </div>
         ) : (
           <div className="flex flex-col items-center gap-1 text-gray-400">
             <span className="text-2xl">
