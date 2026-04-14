@@ -7,6 +7,8 @@ import LinkedInBannersPage from "./pages/LinkedInBannersPage";
 import AnnouncementTemplatesPage from "./pages/AnnouncementTemplatesPage";
 import GoogleTemplatesPage from "./pages/GoogleTemplatesPage";
 import BrandAssetsPage from "./pages/BrandAssetsPage";
+import AdminLoginPage from "./pages/AdminLoginPage";
+import AdminDashboardPage from "./pages/AdminDashboardPage";
 import bot from "../public/bot-laptop.png";
 
 function App() {
@@ -127,6 +129,8 @@ function App() {
           <Route path="announcements" element={<AnnouncementTemplatesPage />} />
           <Route path="google-templates" element={<GoogleTemplatesPage />} />
           <Route path="brand-assets" element={<BrandAssetsPage />} />
+          <Route path="admin" element={<AdminLoginPage />} />
+          <Route path="admin/dashboard" element={<AdminDashboardPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
