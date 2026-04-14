@@ -10,6 +10,7 @@ create table if not exists public.brand_assets (
   file_type text not null,
   file_size bigint default 0,
   tags text[] default '{}',
+  reactions jsonb default '{}'::jsonb,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );

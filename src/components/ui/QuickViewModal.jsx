@@ -74,9 +74,10 @@ export default function QuickViewModal({ asset, onClose }) {
           </div>
 
           {asset.description && (
-            <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              {asset.description}
-            </p>
+            <div
+              className="mt-2 text-sm leading-relaxed text-gray-600 [&_a]:text-brand-700 [&_a]:underline [&_b]:font-semibold [&_i]:italic [&_li]:ml-4 [&_ol]:list-decimal [&_ol]:pl-1 [&_ul]:list-disc [&_ul]:pl-1"
+              dangerouslySetInnerHTML={{ __html: asset.description }}
+            />
           )}
 
           <div className="mt-6 space-y-3">

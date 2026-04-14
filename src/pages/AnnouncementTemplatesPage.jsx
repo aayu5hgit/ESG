@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { Plus, FolderOpen } from "lucide-react";
 import { useAssets } from "../hooks/useAssets";
-import AssetGrid from "../components/ui/AssetGrid";
+import AnnouncementCard from "../components/ui/AnnouncementCard";
 import SearchBar from "../components/ui/SearchBar";
-import UploadAssetModal from "../components/ui/UploadAssetModal";
+import UploadAnnouncementModal from "../components/ui/UploadAnnouncementModal";
 import QuickViewModal from "../components/ui/QuickViewModal";
 import AdminPasswordModal from "../components/ui/AdminPasswordModal";
 import { deleteAsset } from "../services/brandAssets";
@@ -42,10 +42,10 @@ export default function AnnouncementTemplatesPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">
-            Announcement Templates
+            Announcements
           </h1>
           <p className="mt-1 text-sm text-gray-500">
-            LinkedIn announcement templates for team milestones and updates.
+            Templates and posts for team milestones, hiring, and updates.
           </p>
         </div>
         <button
@@ -53,7 +53,7 @@ export default function AnnouncementTemplatesPage() {
           className="inline-flex items-center gap-2 rounded-lg bg-brand-700 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-900"
         >
           <Plus size={16} />
-          Upload Template
+          New Announcement
         </button>
       </div>
 
@@ -73,23 +73,59 @@ export default function AnnouncementTemplatesPage() {
             </button>
           ))}
         </div>
-        <SearchBar value={search} onChange={setSearch} />
+        <SearchBar value={search} onChange={setSearch} placeholder="Search announcements..." />
       </div>
 
+      {/* Social feed layout */}
       <div className="mt-6">
-        <AssetGrid
-          assets={assets}
-          loading={loading}
-          error={error}
-          onDelete={setDeleteTarget}
-          onQuickView={setQuickViewAsset}
-        />
+        {loading ? (
+          <div className="space-y-4">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div
+                key={i}
+                className="animate-pulse overflow-hidden rounded-xl border border-gray-200 bg-white"
+              >
+                <div className="h-48 bg-gray-200" />
+                <div className="space-y-3 p-5">
+                  <div className="h-3 w-20 rounded bg-gray-200" />
+                  <div className="h-5 w-2/3 rounded bg-gray-200" />
+                  <div className="h-3 w-full rounded bg-gray-200" />
+                  <div className="h-3 w-4/5 rounded bg-gray-200" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : error ? (
+          <div className="rounded-lg border border-red-200 bg-red-50 p-6 text-center">
+            <p className="text-sm text-red-600">{error}</p>
+          </div>
+        ) : !assets.length ? (
+          <div className="rounded-lg border border-dashed border-gray-300 p-12 text-center">
+            <FolderOpen className="mx-auto h-10 w-10 text-gray-300" />
+            <p className="mt-3 text-sm font-medium text-gray-500">
+              No announcements yet
+            </p>
+            <p className="mt-1 text-xs text-gray-400">
+              Create your first announcement to get started.
+            </p>
+          </div>
+        ) : (
+          <div className="mx-auto max-w-2xl space-y-5">
+            {assets.map((asset) => (
+              <AnnouncementCard
+                key={asset.id}
+                asset={asset}
+                onDelete={setDeleteTarget}
+                onQuickView={setQuickViewAsset}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
-      <UploadAssetModal
+      <UploadAnnouncementModal
         isOpen={uploadOpen}
         onClose={() => setUploadOpen(false)}
-        defaultCategory="announcement-templates"
         onAssetAdded={(asset) => setAssets((prev) => [asset, ...prev])}
       />
 
@@ -102,8 +138,8 @@ export default function AnnouncementTemplatesPage() {
         isOpen={!!deleteTarget}
         onClose={() => setDeleteTarget(null)}
         onConfirm={confirmDelete}
-        title="Delete Asset"
-        message="Enter the admin password to delete this asset. This action cannot be undone."
+        title="Delete Announcement"
+        message="Enter the admin password to delete this announcement. This action cannot be undone."
       />
     </div>
   );
