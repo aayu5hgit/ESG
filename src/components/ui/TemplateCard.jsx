@@ -20,10 +20,13 @@ function extractFileId(url) {
   return match?.[1] || null;
 }
 
-function getThumbnailUrl(url) {
+function getEmbedUrl(url, subcategory) {
   const fileId = extractFileId(url);
   if (!fileId) return null;
-  return `https://lh3.googleusercontent.com/d/${fileId}=w800`;
+  if (subcategory === "google-sheet") {
+    return `https://docs.google.com/spreadsheets/d/${fileId}/preview`;
+  }
+  return `https://docs.google.com/document/d/${fileId}/preview`;
 }
 
 function formatDate(dateStr) {
@@ -38,40 +41,38 @@ function formatDate(dateStr) {
 export default function TemplateCard({ asset, onDelete }) {
   const config = TYPE_CONFIG[asset.subcategory] || TYPE_CONFIG["google-doc"];
   const TypeIcon = config.icon;
-  const thumbnail = getThumbnailUrl(asset.file_url);
+  const embedUrl = getEmbedUrl(asset.file_url, asset.subcategory);
 
   return (
     <div className="group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md">
-      {/* Clickable thumbnail area */}
+      {/* Preview area */}
       <a
         href={asset.file_url}
         target="_blank"
         rel="noopener noreferrer"
-        className="block"
+        className="relative block"
       >
-        <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gray-100">
-          {thumbnail ? (
-            <img
-              src={thumbnail}
-              alt={asset.name}
-              className="h-full w-full object-cover"
-              onError={(e) => {
-                e.target.style.display = "none";
-                e.target.nextSibling.style.display = "flex";
-              }}
+        <div className="relative aspect-[4/3] overflow-hidden bg-gray-50">
+          {embedUrl ? (
+            <iframe
+              src={embedUrl}
+              title={asset.name}
+              className="h-full w-full scale-[0.5] origin-top-left pointer-events-none"
+              style={{ width: "200%", height: "200%" }}
+              sandbox="allow-scripts allow-same-origin"
+              loading="lazy"
             />
-          ) : null}
-          <div
-            className={`${thumbnail ? "hidden" : "flex"} flex-col items-center gap-2`}
-          >
-            <TypeIcon size={40} className={config.iconColor} />
-            <span className="text-xs text-gray-400">
-              {config.label} Template
-            </span>
-          </div>
+          ) : (
+            <div className="flex h-full flex-col items-center justify-center gap-2">
+              <TypeIcon size={40} className={config.iconColor} />
+              <span className="text-xs text-gray-400">
+                {config.label} Template
+              </span>
+            </div>
+          )}
 
           {/* Hover overlay */}
-          <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/20">
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/20">
             <span className="flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-xs font-medium text-gray-700 opacity-0 shadow transition-opacity group-hover:opacity-100">
               <ExternalLink size={13} />
               Open in Google {config.label === "Doc" ? "Docs" : "Sheets"}
