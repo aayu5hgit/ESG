@@ -1,4 +1,5 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import {
   Home,
   Mail,
@@ -10,6 +11,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { useAdmin } from "../../hooks/useAdmin";
+import LogoutModal from "../ui/LogoutModal";
 import logo from "../../../public/OP-Logo-B.png";
 
 const NAV_ITEMS = [
@@ -23,10 +25,9 @@ const NAV_ITEMS = [
 
 export default function Sidebar() {
   const { isAdmin, adminEmail, logout } = useAdmin();
-  const navigate = useNavigate();
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
   const handleLogout = async () => {
-    if (!confirm("Are you sure you want to logout from admin?")) return;
     await logout();
     window.location.href = "/";
   };
@@ -57,7 +58,6 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      {/* Admin section */}
       <div className="border-t border-gray-200 px-3 py-3">
         {isAdmin ? (
           <div className="space-y-1">
@@ -78,7 +78,7 @@ export default function Sidebar() {
               Admin
             </NavLink>
             <button
-              onClick={handleLogout}
+              onClick={() => setLogoutOpen(true)}
               className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700"
             >
               <LogOut size={16} />
@@ -105,6 +105,13 @@ export default function Sidebar() {
       <div className="border-t border-gray-200 px-5 py-3">
         <p className="text-xs text-gray-400">Optimite Branding Portal</p>
       </div>
+
+      <LogoutModal
+        isOpen={logoutOpen}
+        onClose={() => setLogoutOpen(false)}
+        onConfirm={handleLogout}
+        email={adminEmail}
+      />
     </aside>
   );
 }

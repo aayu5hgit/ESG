@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import {
   Mail,
@@ -9,6 +10,7 @@ import {
   UserPlus,
 } from "lucide-react";
 import { useAdmin } from "../hooks/useAdmin";
+import LogoutModal from "../components/ui/LogoutModal";
 
 const ACTIONS = [
   {
@@ -51,13 +53,13 @@ const ACTIONS = [
 export default function AdminDashboardPage() {
   const navigate = useNavigate();
   const { isAdmin, adminEmail, logout } = useAdmin();
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
   if (!isAdmin) {
     return <Navigate to="/admin" replace />;
   }
 
   const handleLogout = async () => {
-    if (!confirm("Are you sure you want to logout from admin?")) return;
     await logout();
     window.location.href = "/";
   };
@@ -72,7 +74,7 @@ export default function AdminDashboardPage() {
           </p>
         </div>
         <button
-          onClick={handleLogout}
+          onClick={() => setLogoutOpen(true)}
           className="inline-flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
         >
           <LogOut size={16} />
@@ -97,6 +99,13 @@ export default function AdminDashboardPage() {
           </button>
         ))}
       </div>
+
+      <LogoutModal
+        isOpen={logoutOpen}
+        onClose={() => setLogoutOpen(false)}
+        onConfirm={handleLogout}
+        email={adminEmail}
+      />
     </div>
   );
 }
