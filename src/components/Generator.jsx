@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { addEmployee, fetchEmployees } from "../services/employees";
 import { supabase } from "../lib/supabaseClient";
 import { generateSignature, generateReplySignature } from "../email/signatureTemplate";
