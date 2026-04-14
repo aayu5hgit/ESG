@@ -1,4 +1,5 @@
 import { Download, X, Calendar, HardDrive, FileType } from "lucide-react";
+import ReactionBar from "./ReactionBar";
 
 function formatFileSize(bytes) {
   if (!bytes) return "—";
@@ -132,17 +133,29 @@ export default function QuickViewModal({ asset, onClose }) {
             )}
           </div>
 
+          {/* Reactions for announcements */}
+          {asset.category === "announcement-templates" && (
+            <div className="mt-4 border-t border-gray-100 pt-3">
+              <ReactionBar
+                assetId={asset.id}
+                initialReactions={asset.reactions || {}}
+              />
+            </div>
+          )}
+
           <div className="mt-auto pt-6">
-            <a
-              href={asset.file_url}
-              download
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-brand-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-900"
-            >
-              <Download size={16} />
-              Download Asset
-            </a>
+            {asset.file_url && asset.category !== "announcement-templates" && (
+              <a
+                href={asset.file_url}
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-brand-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-900"
+              >
+                <Download size={16} />
+                Download Asset
+              </a>
+            )}
           </div>
         </div>
       </div>
