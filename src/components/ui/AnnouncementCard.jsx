@@ -1,4 +1,5 @@
 import { Trash2, Calendar } from "lucide-react";
+import ReactionBar from "./ReactionBar";
 
 const SUBCATEGORY_LABELS = {
   "probation-completion": "Probation Completion",
@@ -35,13 +36,13 @@ export default function AnnouncementCard({ asset, onDelete, onQuickView }) {
       {/* Image */}
       {isImage && (
         <div
-          className="cursor-pointer"
+          className="flex cursor-pointer items-center justify-center overflow-hidden bg-gray-50"
           onClick={() => onQuickView?.(asset)}
         >
           <img
             src={preview}
             alt={asset.name}
-            className="w-full object-contain"
+            className="max-h-[500px] w-full object-contain"
           />
         </div>
       )}
@@ -85,6 +86,14 @@ export default function AnnouncementCard({ asset, onDelete, onQuickView }) {
             dangerouslySetInnerHTML={{ __html: asset.description }}
           />
         )}
+
+        {/* Reactions */}
+        <div className="mt-4 border-t border-gray-100 pt-3">
+          <ReactionBar
+            assetId={asset.id}
+            initialReactions={asset.reactions || {}}
+          />
+        </div>
       </div>
     </div>
   );
