@@ -7,12 +7,12 @@ import {
   Megaphone,
   FolderOpen,
   FileSpreadsheet,
-  Shield,
   LogOut,
 } from "lucide-react";
 import { useAdmin } from "../../hooks/useAdmin";
 import LogoutModal from "../ui/LogoutModal";
 import logo from "../../../public/OP-Logo-B.png";
+import adminIcon from "../../../public/admin-icon.svg";
 
 const NAV_ITEMS = [
   { to: "/", icon: Home, label: "Home" },
@@ -72,7 +72,7 @@ export default function Sidebar() {
               }
             >
               <div className="relative">
-                <Shield size={18} />
+                <img src={adminIcon} alt="" className="h-[18px] w-[18px]" />
                 <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-green-500" />
               </div>
               Admin
@@ -96,7 +96,7 @@ export default function Sidebar() {
               }`
             }
           >
-            <Shield size={18} />
+            <img src={adminIcon} alt="" className="h-[18px] w-[18px] opacity-60" />
             Admin Login
           </NavLink>
         )}
