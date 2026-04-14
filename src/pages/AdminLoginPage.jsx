@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Shield } from "lucide-react";
 import { useAdmin } from "../hooks/useAdmin";
+import { supabase } from "../lib/supabaseClient";
 
 export default function AdminLoginPage() {
   const navigate = useNavigate();
@@ -16,10 +17,8 @@ export default function AdminLoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Already logged in — redirect
   if (isAdmin) {
-    navigate("/admin/dashboard", { replace: true });
-    return null;
+    return <Navigate to="/admin/dashboard" replace />;
   }
 
   const handleSubmit = async (e) => {
@@ -40,9 +39,29 @@ export default function AdminLoginPage() {
     }
 
     setLoading(true);
-    await login(email.trim());
-    setLoading(false);
-    navigate("/admin/dashboard", { replace: true });
+    try {
+      // Verify email exists in employees table
+      const { data, error: fetchError } = await supabase
+        .from("employees")
+        .select("id")
+        .eq("email", email.trim().toLowerCase())
+        .maybeSingle();
+
+      if (fetchError) throw fetchError;
+
+      if (!data) {
+        setError("This email is not registered as an employee.");
+        setLoading(false);
+        return;
+      }
+
+      await login(email.trim().toLowerCase());
+      navigate("/admin/dashboard", { replace: true });
+    } catch (err) {
+      setError(err?.message || "Login failed.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
