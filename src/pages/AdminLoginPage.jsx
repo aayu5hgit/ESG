@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Shield } from "lucide-react";
 import { useAdmin } from "../hooks/useAdmin";
 import { supabase } from "../lib/supabaseClient";
+import adminIcon from "../../public/admin-icon.svg";
 
 export default function AdminLoginPage() {
   const navigate = useNavigate();
@@ -69,7 +69,7 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-sm rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
         <div className="mb-6 flex flex-col items-center">
           <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-brand-900/10">
-            <Shield size={24} className="text-brand-900" />
+            <img src={adminIcon} alt="" className="h-6 w-6" />
           </div>
           <h1 className="text-lg font-bold text-gray-900">Admin Login</h1>
           <p className="mt-1 text-center text-xs text-gray-500">
