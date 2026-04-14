@@ -1,5 +1,10 @@
 import { Download, Trash2, Eye } from "lucide-react";
 
+function stripHtml(html) {
+  if (!html) return "";
+  return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
 function formatFileSize(bytes) {
   if (!bytes) return "";
   if (bytes < 1024) return `${bytes} B`;
@@ -46,7 +51,7 @@ export default function AssetCard({ asset, onDelete, onQuickView }) {
         </p>
         {asset.description && (
           <p className="mt-0.5 truncate text-xs text-gray-500">
-            {asset.description}
+            {stripHtml(asset.description)}
           </p>
         )}
         <div className="mt-0.5 text-xs text-gray-400">
