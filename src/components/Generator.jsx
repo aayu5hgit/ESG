@@ -1,11 +1,13 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { addEmployee, fetchEmployees } from "../services/employees";
 import { supabase } from "../lib/supabaseClient";
 import { generateSignature, generateReplySignature } from "../email/signatureTemplate";
+import { useAdmin } from "../hooks/useAdmin";
 import logo from "../../public/OP-Logo-B.png";
 
 export default function SignatureGenerator() {
   const fileInputRef = useRef(null);
+  const { isAdmin } = useAdmin();
   const [selected, setSelected] = useState("");
   const [html, setHtml] = useState("");
   const [replyHtml, setReplyHtml] = useState("");
@@ -14,9 +16,7 @@ export default function SignatureGenerator() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [isAddOpen, setIsAddOpen] = useState(false);
-  const [addStep, setAddStep] = useState("password");
-  const [addPassword, setAddPassword] = useState("");
-  const [addAuthError, setAddAuthError] = useState("");
+  const [addStep, setAddStep] = useState("form");
   const [addForm, setAddForm] = useState({
     name: "",
     email: "",
@@ -28,10 +28,6 @@ export default function SignatureGenerator() {
   const [addSubmitting, setAddSubmitting] = useState(false);
 
   const baseUrl = window.location.origin;
-  const addEmployeePassword = useMemo(
-    () => import.meta.env.VITE_ADD_EMPLOYEE_PASSWORD || "",
-    [],
-  );
 
   useEffect(() => {
     return () => {
@@ -96,9 +92,7 @@ export default function SignatureGenerator() {
 
   const openAddModal = () => {
     setIsAddOpen(true);
-    setAddStep("password");
-    setAddPassword("");
-    setAddAuthError("");
+    setAddStep("form");
     setAddForm({
       name: "",
       email: "",
@@ -107,20 +101,6 @@ export default function SignatureGenerator() {
       photoPreview: "",
     });
     setAddFormError("");
-  };
-
-  const handleAddPasswordSubmit = (event) => {
-    event.preventDefault();
-    if (!addEmployeePassword) {
-      setAddAuthError("Add-employee password is not configured.");
-      return;
-    }
-    if (addPassword !== addEmployeePassword) {
-      setAddAuthError("Incorrect password. Try again.");
-      return;
-    }
-    setAddAuthError("");
-    setAddStep("form");
   };
 
   const makeSlug = (name) => {
@@ -295,12 +275,14 @@ export default function SignatureGenerator() {
           </button>
         </div>
 
-        <button
-          onClick={openAddModal}
-          className="mt-4 w-full roundedpx-4 py-2 text-sm font-semibold text-emerald-700 hover:text-emerald-900"
-        >
-          Add New Employee
-        </button>
+        {isAdmin && (
+          <button
+            onClick={openAddModal}
+            className="mt-4 w-full rounded px-4 py-2 text-sm font-semibold text-brand-700 hover:text-brand-900"
+          >
+            Add New Employee
+          </button>
+        )}
 
         {error && (
           <p className="mt-3 text-sm text-red-600">
@@ -371,41 +353,6 @@ export default function SignatureGenerator() {
                 Close
               </button>
             </div>
-
-            {addStep === "password" && (
-              <form onSubmit={handleAddPasswordSubmit} className="space-y-4">
-                <div>
-                  <label
-                    htmlFor="add-password"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Password
-                  </label>
-                  <input
-                    id="add-password"
-                    type="password"
-                    className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-black focus:outline-none"
-                    placeholder="Enter password"
-                    value={addPassword}
-                    onChange={(event) => setAddPassword(event.target.value)}
-                    autoFocus
-                  />
-                </div>
-                {addAuthError ? (
-                  <p className="text-sm text-red-600">{addAuthError}</p>
-                ) : (
-                  <p className="text-xs text-gray-500">
-                    Enter the admin password to continue.
-                  </p>
-                )}
-                <button
-                  type="submit"
-                  className="w-full rounded-md bg-emerald-700 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-900"
-                >
-                  Continue
-                </button>
-              </form>
-            )}
 
             {addStep === "form" && (
               <form onSubmit={handleAddEmployeeSubmit} className="space-y-4">
