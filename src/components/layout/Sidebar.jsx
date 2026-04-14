@@ -5,6 +5,7 @@ import {
   Image,
   Megaphone,
   FolderOpen,
+  FileSpreadsheet,
 } from "lucide-react";
 import logo from "../../../public/OP-Logo-B.png";
 
@@ -13,6 +14,7 @@ const NAV_ITEMS = [
   { to: "/signatures", icon: Mail, label: "Email Signatures" },
   { to: "/linkedin-banners", icon: Image, label: "LinkedIn Banners" },
   { to: "/announcements", icon: Megaphone, label: "Announcements" },
+  { to: "/google-templates", icon: FileSpreadsheet, label: "Google Templates" },
   { to: "/brand-assets", icon: FolderOpen, label: "Brand Assets" },
 ];
 

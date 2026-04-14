@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Mail, Image, Megaphone, FolderOpen } from "lucide-react";
+import { Mail, Image, Megaphone, FolderOpen, FileSpreadsheet } from "lucide-react";
 import CategoryCard from "../components/ui/CategoryCard";
 import AssetGrid from "../components/ui/AssetGrid";
 import QuickViewModal from "../components/ui/QuickViewModal";
@@ -26,6 +26,13 @@ const CATEGORIES = [
     label: "Announcements",
     description: "Templates for team announcements",
     countKey: "announcement-templates",
+  },
+  {
+    to: "/google-templates",
+    icon: FileSpreadsheet,
+    label: "Google Templates",
+    description: "Doc and Sheet templates",
+    countKey: "google-templates",
   },
   {
     to: "/brand-assets",
@@ -69,7 +76,7 @@ export default function DashboardPage() {
         Access and download branded assets for Optimite.
       </p>
 
-      <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-5">
         {CATEGORIES.map((cat) => (
           <CategoryCard
             key={cat.to}

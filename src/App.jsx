@@ -5,6 +5,7 @@ import DashboardPage from "./pages/DashboardPage";
 import EmailSignaturesPage from "./pages/EmailSignaturesPage";
 import LinkedInBannersPage from "./pages/LinkedInBannersPage";
 import AnnouncementTemplatesPage from "./pages/AnnouncementTemplatesPage";
+import GoogleTemplatesPage from "./pages/GoogleTemplatesPage";
 import BrandAssetsPage from "./pages/BrandAssetsPage";
 import bot from "../public/bot-laptop.png";
 
@@ -124,6 +125,7 @@ function App() {
           <Route path="signatures" element={<EmailSignaturesPage />} />
           <Route path="linkedin-banners" element={<LinkedInBannersPage />} />
           <Route path="announcements" element={<AnnouncementTemplatesPage />} />
+          <Route path="google-templates" element={<GoogleTemplatesPage />} />
           <Route path="brand-assets" element={<BrandAssetsPage />} />
         </Route>
       </Routes>
